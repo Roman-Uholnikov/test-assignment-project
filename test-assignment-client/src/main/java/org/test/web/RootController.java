@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.test.domain.DocumentWrapper;
 import org.test.domain.SearchRequest;
 import org.test.service.DocumentService;
 
@@ -49,6 +50,20 @@ public class RootController {
                                  @PathVariable("key") String key) {
         model.addAttribute("document", documentService.getDocument(key));
         return "document";
+    }
+
+    @GetMapping("/add")
+    public String addView(Model model) {
+        model.addAttribute("documentWrapper", new DocumentWrapper());
+        return "createDocument";
+    }
+
+    @PostMapping("/add")
+    public String addPost(Model model,
+                               @ModelAttribute DocumentWrapper documentWrapper) {
+        model.addAttribute("documentWrapper", new DocumentWrapper());
+        model.addAttribute("created", documentService.saveDocument(documentWrapper));
+        return "createDocument";
     }
 
 

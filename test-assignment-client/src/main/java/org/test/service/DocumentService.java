@@ -1,5 +1,6 @@
 package org.test.service;
 
+import org.test.domain.DocumentWrapper;
 import org.test.domain.SearchRequest;
 
 import java.util.List;
@@ -22,10 +23,10 @@ public interface DocumentService {
     /**
      * Save document
      *
-     * @return true if saved successfully, false otherwise
+     * @return null if saved successfully, Error message otherwise
      * (bad parameters, document already exist...)
      */
-    boolean saveDocument(String document, String documentKey);
+    String saveDocument(DocumentWrapper documentWrapper);
 
     /**
      * Get all documents

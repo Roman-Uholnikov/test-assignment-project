@@ -4,7 +4,8 @@
     <title>Search engine</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 </head>
 <body>
@@ -18,7 +19,8 @@
             <ul class="nav navbar-nav">
                 <li><a href="/">Home</a></li>
                 <li><a href="/search">Search for document</a></li>
-                <li><a href="/add">Add document</a></li>
+                <li class="active">
+                    <a href="#">Add document</a></li>
             </ul>
         </div>
     </div>
@@ -27,11 +29,17 @@
 <div class="container">
 
     <div class="starter-template">
-        <h1>Document:</h1>
-        <pre th:text="${document}"/>
-        <div th:if="${document} == null" >
-            <div class="alert-warning"> Document not found.</div>
-        </div>
+        <th:block th:if="${created}">
+            <div class="alert alert-success">
+                <p>Document was saved</p></div>
+        </th:block>
+
+        <h1>Add new document</h1>
+        <form action="#" th:action="@{/add}" th:object="${documentWrapper}" method="post">
+            <p> Key: <input type="text" th:field="*{key}"></p>
+            <p> Document: <textarea th:field="*{document}" /></p>
+            <input type="submit">
+        </form>
 
     </div>
 
