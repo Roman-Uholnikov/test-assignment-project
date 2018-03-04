@@ -16,9 +16,9 @@ public interface DocumentService {
      * Fetch document by key
      *
      * @param documentKey key of the document
-     * @return String document or null if not found
+     * @return  document or null if not found
      */
-    String getDocument(String documentKey);
+    DocumentWrapper getDocument(String documentKey);
 
     /**
      * Save document

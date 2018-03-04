@@ -2,12 +2,14 @@ package org.test.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.test.domain.DocumentResources;
+import org.springframework.web.util.UriComponentsBuilder;
 import org.test.domain.DocumentWrapper;
 import org.test.domain.SearchRequest;
 
@@ -26,17 +28,14 @@ public class DocumentServiceImpl implements DocumentService {
     private Map<String, String> documentKeys = new HashMap<>();
 
     @Override
-    public String getDocument(String documentKey) {
-        return documentKeys.entrySet().stream()
-                .filter(s -> s.getKey().contains(documentKey))
-                .map(g -> g.getValue())
-                .findFirst().get();
+    public DocumentWrapper getDocument(String documentKey) {
+        return  restTemplate.getForObject(serverBaseUrl + "/document/" + documentKey, DocumentWrapper.class);
     }
 
     @Override
     public String saveDocument(DocumentWrapper wrapper) {
         String documentResource = restTemplate
-                .postForObject(serverBaseUrl,
+                .postForObject(serverBaseUrl + "/document",
                         wrapper, String.class);
 
         return documentResource.toString();
@@ -45,20 +44,48 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public List<String> getAllDocumentsKeys() {
-        Resources resoponse = restTemplate
-                .getForObject(serverBaseUrl, Resources.class);
-        return Collections.emptyList();
-
-//        return Arrays.stream(forEntity.getBody())
-//                .map(Resource::getContent)
-//                .map(DocumentWrapper::getKey)
-//                .collect(Collectors.toList());
+        return restTemplate
+                .getForObject(serverBaseUrl + "/document-keys", List.class);
     }
 
     @Override
     public List<String> searchDocuments(SearchRequest searchRequest) {
-        return documentKeys.keySet().stream()
-                .filter(s -> s.contains(searchRequest.getPhrase()))
-                .collect(Collectors.toList());
+        String url;
+        String phrase = searchRequest.getPhrase();
+        if(searchRequest.isExactMatch()){
+            url = serverBaseUrl + "/document/search/like";
+        } else {
+            url = serverBaseUrl + "/document/search/regexp";
+            phrase = buildRegExp(phrase);
+
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("phrase", phrase);
+
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        HttpEntity<List> response = restTemplate.exchange(
+                builder.build().encode().toUri(),
+                HttpMethod.GET,
+                entity,
+                List.class);
+
+        return response.getBody();
+    }
+
+    private String buildRegExp(String phrase) {
+        StringBuilder builder = new StringBuilder("");
+        String[] split = phrase.split("[^a-zA-Z0-9-_]");
+        builder.append("(([^a-zA-Z0-9-_]+)|(^))");
+        for (String token :
+                split) {
+            builder.append("(" + token + ")");
+            builder.append("([^a-zA-Z0-9-_]{1}.*[^a-zA-Z0-9-_]{1}|(\\ )|($))");
+        }
+
+        return builder.toString();
     }
 }

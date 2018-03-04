@@ -17,6 +17,9 @@ import java.util.List;
 public interface DocumentWrapperRepository extends MongoRepository<DocumentWrapper, String> {
 
         @Query(fields="{ 'key': 1 }")
+        List<DocumentWrapper> findAllByKeyNotNull();
+
+        @Query(fields="{ 'key': 1 }")
         List<DocumentWrapper> findByDocumentRegex(@Param("rexExp") String rexExp);
 
         @Query(fields="{ 'key': 1 }")
