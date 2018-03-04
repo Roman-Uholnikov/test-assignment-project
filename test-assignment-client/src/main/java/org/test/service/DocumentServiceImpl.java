@@ -4,8 +4,6 @@ import org.springframework.stereotype.Service;
 import org.test.domain.DocumentWrapper;
 import org.test.domain.SearchRequest;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

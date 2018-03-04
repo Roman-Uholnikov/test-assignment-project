@@ -20,7 +20,7 @@
 	</properties>
 	<modules>
 		<module>test-assignment-client</module>
-		<!-- <module>test-assignment-server</module> -->
+		<module>test-assignment-server</module>
 	</modules>
 	<!-- No dependencies - otherwise the samples won't work if you change the
 		parent -->
