@@ -16,10 +16,10 @@ import java.util.List;
 @RepositoryRestResource(collectionResourceRel = "document", path = "document")
 public interface DocumentWrapperRepository extends MongoRepository<DocumentWrapper, String> {
 
-    DocumentWrapper findByKey(@Param("key") String key);
+        @Query(fields="{ 'key': 1 }")
+        List<DocumentWrapper> findByDocumentRegex(@Param("rexExp") String rexExp);
 
-    List<DocumentWrapper> findByDocumentRegex(String document);
+        @Query(fields="{ 'key': 1 }")
+        List<DocumentWrapper> findByDocumentLike(@Param("phrase") String phrase);
+    }
 
-    @Query(" $text: { $search: \"?0\" }")
-    List<DocumentWrapper> searchDocumentsByExactPhrase(String phrase);
-}
