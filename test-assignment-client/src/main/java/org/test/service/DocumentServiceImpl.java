@@ -55,8 +55,7 @@ public class DocumentServiceImpl implements DocumentService {
         if(searchRequest.isExactMatch()){
             url = serverBaseUrl + "/document/search/like";
         } else {
-            url = serverBaseUrl + "/document/search/regexp";
-            phrase = buildRegExp(phrase);
+            url = serverBaseUrl + "/document/search/phrase";
 
         }
         HttpHeaders headers = new HttpHeaders();
@@ -76,16 +75,4 @@ public class DocumentServiceImpl implements DocumentService {
         return response.getBody();
     }
 
-    private String buildRegExp(String phrase) {
-        StringBuilder builder = new StringBuilder("");
-        String[] split = phrase.split("[^a-zA-Z0-9-_]");
-        builder.append("(([^a-zA-Z0-9-_]+)|(^))");
-        for (String token :
-                split) {
-            builder.append("(" + token + ")");
-            builder.append("([^a-zA-Z0-9-_]{1}.*[^a-zA-Z0-9-_]{1}|(\\ )|($))");
-        }
-
-        return builder.toString();
-    }
 }

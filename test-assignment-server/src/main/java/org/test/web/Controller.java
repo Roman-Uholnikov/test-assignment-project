@@ -5,8 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.test.service.DocumentService;
 import org.test.domain.DocumentWrapper;
-import org.test.persistance.DocumentWrapperRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,27 +17,28 @@ public class Controller {
     // thin endpoints.
 
     @Autowired
-    private DocumentWrapperRepository repository;
+    private DocumentService service;
 
 
     @GetMapping("/document-keys")
     public ResponseEntity<List> allDocuments(){
-        List<DocumentWrapper> all = repository.findAllByKeyNotNull();
+        List<DocumentWrapper> all = service.findAllByKeyNotNull();
         return ResponseEntity.ok(all.stream().map(DocumentWrapper::getKey)
                 .collect(Collectors.toList()));
     }
 
     @GetMapping("/document/search/like")
     public ResponseEntity<List> allDocumentsLike(@RequestParam("phrase") String phrase){
-        List<DocumentWrapper> all = repository.findByDocumentLike(phrase);
+        List<DocumentWrapper> all = service.findByDocumentLike(phrase);
         return ResponseEntity.ok(all.stream().map(DocumentWrapper::getKey)
                 .collect(Collectors.toList()));
     }
 
-    @GetMapping("/document/search/regexp")
+    @GetMapping("/document/search/phrase")
     public ResponseEntity<List> allDocumentsRgexp(@RequestParam("phrase") String phrase){
-        List<DocumentWrapper> all = repository.findByDocumentRegex(phrase);
+        List<DocumentWrapper> all = service.findByDocumentRegex(phrase);
         return ResponseEntity.ok(all.stream().map(DocumentWrapper::getKey)
                 .collect(Collectors.toList()));
     }
+
 }
