@@ -1,17 +1,27 @@
 package org.test.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.test.domain.DocumentResources;
 import org.test.domain.DocumentWrapper;
 import org.test.domain.SearchRequest;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
-//todo roman: implement it
 @Service
 public class DocumentServiceImpl implements DocumentService {
+
+    @Value("${test.assignment.server.url}")
+    private String serverBaseUrl;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     private Map<String, String> documentKeys = new HashMap<>();
 
@@ -25,13 +35,24 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public String saveDocument(DocumentWrapper wrapper) {
-        String put = documentKeys.put(wrapper.getKey(), wrapper.getDocument());
-        return null;
+        String documentResource = restTemplate
+                .postForObject(serverBaseUrl,
+                        wrapper, String.class);
+
+        return documentResource.toString();
+
     }
 
     @Override
     public List<String> getAllDocumentsKeys() {
-        return documentKeys.keySet().stream().collect(Collectors.toList());
+        Resources resoponse = restTemplate
+                .getForObject(serverBaseUrl, Resources.class);
+        return Collections.emptyList();
+
+//        return Arrays.stream(forEntity.getBody())
+//                .map(Resource::getContent)
+//                .map(DocumentWrapper::getKey)
+//                .collect(Collectors.toList());
     }
 
     @Override
