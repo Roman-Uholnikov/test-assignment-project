@@ -18,9 +18,6 @@ import java.util.Collections;
 @Controller
 public class RootController {
 
-    @Value("${welcome.message:test}")
-    private String message;
-
     @Autowired
     private DocumentService documentService;
 

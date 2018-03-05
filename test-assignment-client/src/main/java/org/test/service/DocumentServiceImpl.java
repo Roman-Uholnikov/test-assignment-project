@@ -38,7 +38,7 @@ public class DocumentServiceImpl implements DocumentService {
                 .postForObject(serverBaseUrl + "/document",
                         wrapper, String.class);
 
-        return documentResource.toString();
+        return documentResource;
 
     }
 
