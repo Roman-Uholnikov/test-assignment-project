@@ -33,15 +33,17 @@
 			<h2>Search principles</h2>
 			<ul>
 				<li><b>exact match</b> means that we want to find exact matching of the phrase in the document (prefix and postfix are not counted)  </li>
-				<li>if no exact matching selected, then match:  all documents that contain <b>all words</b> from he
-					phrase (<b>words should match exactly</b>, no endings or prefixes), words from phrarse should be
+				<li>if no exact matching selected, then match:  all documents that contain <b>all words</b> from the
+					phrase (<b>words should match exactly</b>, no endings or prefixes), words from phrase should be
 					found in the <b>order they were provided</b>.
 				</li>
 			</ul>
+
+			See examples for <i>not exact match</i>>:
 			<p>Example 1:</p>
 			Search word: <b>interesting test assignment</b>
 			<p>Match:</p>
-			<pre>We search for <b>interesting</b> people. We <b>test</b> them a lot. After they receive <b>assignment</b>.</pre>
+			<pre>We search for <b>interesting</b> people. We <b>test</b> them a lot but only after they receive <b>assignment</b>.</pre>
 
 			<p>However Example 2:</p>
 			Search word: <b>interesting test assignment</b>

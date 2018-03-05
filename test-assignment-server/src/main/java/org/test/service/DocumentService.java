@@ -36,13 +36,15 @@ public class DocumentService {
      */
     private String buildRegExp(String phrase) {
         StringBuilder builder = new StringBuilder("");
-        String[] split = phrase.split("[^a-zA-Z0-9-_]");
-        builder.append("(([^a-zA-Z0-9-_]+)|(^))");
+        String[] split = phrase.split("[^\\w]");
         for (String token :
                 split) {
+            builder.append("([\\W\\s\\w]*)");
+            builder.append("(\\b)");
             builder.append("(" + token + ")");
-            builder.append("([^a-zA-Z0-9-_]{1}.*[^a-zA-Z0-9-_]{1}|(\\ )|($)|[^a-zA-Z0-9-_]{1})");
+            builder.append("(\\b)");
         }
+        builder.append("(([\\W\\s\\w]*)|($))");
 
         return builder.toString();
     }
