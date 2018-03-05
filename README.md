@@ -22,7 +22,7 @@ start mvnw spring-boot:run -f test-assignment-client/pom.xml
 start mvnw spring-boot:run -f test-assignment-server/pom.xml
 ```
 
-Open [http://localhost:8080] to visit client.
+Open [http://localhost:8080](http://localhost:8080) to visit client.
 
 
 ## How to test
