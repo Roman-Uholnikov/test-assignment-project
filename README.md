@@ -15,7 +15,7 @@ Simplest static configuration could be used (no service discovery, replicas, bal
 ```
  
 ## How to run
-To run everything execute (windows)
+To run everything execute
 
 ```
 start mvnw spring-boot:run -f test-assignment-client/pom.xml
