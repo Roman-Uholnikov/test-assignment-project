@@ -13,6 +13,7 @@ To keep things simple we can assume that there will be no overwrites of a key wi
 You should not use existing tools like Lucene based solution, Sphinx or similar.
 Simplest static configuration could be used (no service discovery, replicas, balancing etc.)
 ```
+Full description in [Java_TestTask__2018.pdf](Java_TestTask__2018.pdf)
  
 ## How to run
 To run everything execute
@@ -21,13 +22,17 @@ To run everything execute
 start mvnw spring-boot:run -f test-assignment-client/pom.xml
 start mvnw spring-boot:run -f test-assignment-server/pom.xml
 ```
+Or simply [run.bat](run.bat) or [run.sh](run.sh)
 
 Open [http://localhost:8080](http://localhost:8080) to visit client.
 
 
 ## How to test
-execute in the root folder of the project:
+Execute in the root folder of the project:
 
 ```
 mvnw test
 ```
+
+## Time spent
+Approximate time that was spent on the project: 8-10 hours.

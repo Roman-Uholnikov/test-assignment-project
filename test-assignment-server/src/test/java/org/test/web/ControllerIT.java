@@ -40,13 +40,14 @@ public class ControllerIT {
         insertDocument("key6", "test and assignment here");
         insertDocument("key7", "sssstestassignmentsss");
         insertDocument("key8", "a test % assignment");
+        insertDocument("key9", "?a test !@#$%^&*()_+ assignment?");
     }
 
     @Test
     public void allDocuments() throws Exception {
         mvc.perform(get("/document-keys"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(7)));
+                .andExpect(jsonPath("$", hasSize(9)));
     }
 
     @Test
@@ -55,7 +56,7 @@ public class ControllerIT {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$.[0]", is("key2")))
-                .andExpect(jsonPath("$.[0]", is("key3")));
+                .andExpect(jsonPath("$.[1]", is("key3")));
     }
 
     @Test
@@ -68,6 +69,7 @@ public class ControllerIT {
 
     @Test
     public void allDocumentsRgexp() throws Exception {
+        //only sssstestassignmentsss and test what? are not matching
         mvc.perform(get("/document/search/phrase").param("phrase", "test assignment"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(7)));

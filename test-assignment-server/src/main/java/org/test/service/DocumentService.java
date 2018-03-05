@@ -41,7 +41,7 @@ public class DocumentService {
         for (String token :
                 split) {
             builder.append("(" + token + ")");
-            builder.append("([^a-zA-Z0-9-_]{1}.*[^a-zA-Z0-9-_]{1}|(\\ )|($))");
+            builder.append("([^a-zA-Z0-9-_]{1}.*[^a-zA-Z0-9-_]{1}|(\\ )|($)|[^a-zA-Z0-9-_]{1})");
         }
 
         return builder.toString();
