@@ -15,5 +15,19 @@ Simplest static configuration could be used (no service discovery, replicas, bal
 ```
  
 ## How to run
-todo fil it in
+To run everything execute (windows)
+
+```
+start mvnw spring-boot:run -f test-assignment-client/pom.xml
+start mvnw spring-boot:run -f test-assignment-server/pom.xml
+```
+
+Open [http://localhost:8080] to visit client.
+
+
 ## How to test
+execute in the root folder of the project:
+
+```
+mvn test
+```
