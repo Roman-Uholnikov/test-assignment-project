@@ -29,5 +29,5 @@ Open [http://localhost:8080](http://localhost:8080) to visit client.
 execute in the root folder of the project:
 
 ```
-mvn test
+mvnw test
 ```
