@@ -47,13 +47,4 @@ public class DocumentService {
         return builder.toString();
     }
 
-    // TODO: 05.03.18 test it on
-    /*
-    test what?
-    test assignment for Roman
-    a test assignment
-    test and assignment
-    super test and assignment
-    test and assignment here
-     */
 }
